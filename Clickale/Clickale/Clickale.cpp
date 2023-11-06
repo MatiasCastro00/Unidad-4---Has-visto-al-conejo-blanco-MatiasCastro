@@ -17,7 +17,7 @@ private:
 	sf::Texture texture;
 
 public:
-	Crosshair(const std::string& texturePath) {
+	Crosshair(const string& texturePath) {
 		if (!texture.loadFromFile(texturePath)) {
 			// Handle error
 		}
@@ -26,11 +26,11 @@ public:
 		sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 	}
 
-	void updatePosition(const sf::Vector2i& mousePosition) {
+	void updatePosition(const Vector2i& mousePosition) {
 		sprite.setPosition(static_cast<float>(mousePosition.x), static_cast<float>(mousePosition.y));
 	}
 
-	void draw(sf::RenderWindow& window) {
+	void draw(RenderWindow& window) {
 		window.draw(sprite);
 	}
 };
@@ -41,17 +41,17 @@ private:
 	static constexpr float SCALE = 0.1f;
 
 public:
-	Enemy(const sf::Texture& texture, float x, float y) : sprite(texture) {
+	Enemy(const Texture& texture, float x, float y) : sprite(texture) {
 		sprite.setOrigin(sprite.getLocalBounds().width / 2, sprite.getLocalBounds().height / 2);
 		sprite.setPosition(x, y);
 		sprite.setScale(SCALE, SCALE);
 	}
 
-	const sf::Sprite& getSprite() const {
+	const Sprite& getSprite() const {
 		return sprite;
 	}
 
-	void draw(sf::RenderWindow& window) {
+	void draw(RenderWindow& window) {
 		window.draw(sprite);
 	}
 };
@@ -62,7 +62,7 @@ private:
 	sf::Texture texture;
 
 public:
-	EnemyManager(const std::string& texturePath) {
+	EnemyManager(const string& texturePath) {
 		if (!texture.loadFromFile(texturePath)) {
 			// Handle error
 		}
@@ -76,13 +76,13 @@ public:
 		}
 	}
 
-	void drawEnemies(sf::RenderWindow& window) {
+	void drawEnemies(RenderWindow& window) {
 		for (Enemy& enemy : enemies) {
 			enemy.draw(window);
 		}
 	}
 
-	void checkHits(const sf::Vector2i& mousePosition) {
+	void checkHits(const Vector2i& mousePosition) {
 		auto it = enemies.begin();
 		while (it != enemies.end()) {
 			if (it->getSprite().getGlobalBounds().contains(sf::Vector2f(mousePosition))) {
@@ -117,10 +117,10 @@ int main() {
 			// ...
 		}
 
-		sf::Vector2i mousePos = sf::Mouse::getPosition(App);
+		Vector2i mousePos = Mouse::getPosition(App);
 
-		if (event.type == sf::Event::MouseButtonPressed) {
-			if (event.mouseButton.button == sf::Mouse::Left) {
+		if (event.type == Event::MouseButtonPressed) {
+			if (event.mouseButton.button == Mouse::Left) {
 				enemyManager.checkHits(mousePos);
 			}
 		}
